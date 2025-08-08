@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# 🟡 Ask user to input initial users before starting the server
 users = {}
 num_users = int(input("How many users to add? "))
 
@@ -11,7 +10,6 @@ for i in range(1, num_users + 1):
     age = int(input(f"Enter age for user {i}: "))
     users[i] = {"name": name, "age": age}
 
-# -----------------------------
 # GET: Get user by ID
 @app.route("/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
@@ -20,7 +18,6 @@ def get_user(user_id):
         return jsonify({"id": user_id, "user": user})
     return jsonify({"error": "User not found"}), 404
 
-# -----------------------------
 # POST: Add new user
 @app.route("/users", methods=["POST"])
 def create_user():
@@ -32,7 +29,6 @@ def create_user():
     users[new_id] = {"name": data["name"], "age": data["age"]}
     return jsonify({"message": "User created", "id": new_id}), 201
 
-# -----------------------------
 # PUT: Update user
 @app.route("/users/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
@@ -46,7 +42,6 @@ def update_user(user_id):
     users[user_id].update(data)
     return jsonify({"message": "User updated", "user": users[user_id]})
 
-# -----------------------------
 # DELETE: Delete user
 @app.route("/users/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id):
@@ -58,3 +53,4 @@ def delete_user(user_id):
 # -----------------------------
 if __name__ == "__main__":
     app.run(debug=True)
+
